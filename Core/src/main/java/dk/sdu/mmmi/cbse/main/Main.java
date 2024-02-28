@@ -20,6 +20,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Polygon;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -53,6 +55,9 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, true);
             }
+            if (event.getCode().equals(KeyCode.SPACE)) {
+                gameData.getKeys().setKey(GameKeys.SPACE, true);
+            }
         });
         scene.setOnKeyReleased(event -> {
             if (event.getCode().equals(KeyCode.LEFT)) {
@@ -64,7 +69,9 @@ public class Main extends Application {
             if (event.getCode().equals(KeyCode.UP)) {
                 gameData.getKeys().setKey(GameKeys.UP, false);
             }
-
+            if (event.getCode().equals(KeyCode.SPACE)) {
+                gameData.getKeys().setKey(GameKeys.SPACE, false);
+            }
         });
 
         // Lookup all Game Plugins using ServiceLoader
@@ -104,6 +111,12 @@ public class Main extends Application {
         // Update
         for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
             entityProcessorService.process(gameData, world);
+        }
+        for (Entity entity : world.getEntities()) {
+            if (!polygons.containsKey(entity)) {
+                Polygon polygon = new Polygon(entity.getPolygonCoordinates());
+                polygons.put(entity, polygon);
+            }
         }
 //        for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
 //            postEntityProcessorService.process(gameData, world);
