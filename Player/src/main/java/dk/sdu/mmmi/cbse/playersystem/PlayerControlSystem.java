@@ -1,6 +1,5 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
-import dk.sdu.mmmi.cbse.common.bullet.Bullet;
 import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
@@ -15,16 +14,23 @@ import static java.util.stream.Collectors.toList;
 
 
 public class PlayerControlSystem implements IEntityProcessingService {
+    static long timeOfLastShot;
+    long shootingCooldown = 0;
+
+    private boolean canIShoot(){
+        long currentTime = System.nanoTime();
+        return currentTime - timeOfLastShot >= shootingCooldown;
+    }
 
     @Override
     public void process(GameData gameData, World world) {
             
         for (Entity player : world.getEntities(Player.class)) {
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
-                player.setRotation(player.getRotation() - 5);                
+                player.setRotation(player.getRotation() - 2);
             }
             if (gameData.getKeys().isDown(GameKeys.RIGHT)) {
-                player.setRotation(player.getRotation() + 5);
+                player.setRotation(player.getRotation() + 2);
             }
             if (gameData.getKeys().isDown(GameKeys.UP)) {
                 double changeX = Math.cos(Math.toRadians(player.getRotation()));
@@ -32,9 +38,12 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 player.setX(player.getX() + changeX);
                 player.setY(player.getY() + changeY);
             }
-            if (gameData.getKeys().isDown(GameKeys.SPACE)) {
+            if (gameData.getKeys().isDown(GameKeys.SPACE) && this.canIShoot()) {
                 getBulletSPIs().stream().findFirst().ifPresent(
-                        bulletSPI -> world.addEntity(bulletSPI.createBullet(player, gameData))
+                        bulletSPI -> {
+                            world.addEntity(bulletSPI.createBullet(player, gameData));
+                            timeOfLastShot = System.nanoTime();
+                        }
                 );
             }
             
