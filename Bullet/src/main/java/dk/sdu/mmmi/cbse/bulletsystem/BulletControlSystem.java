@@ -22,7 +22,6 @@ public class BulletControlSystem implements IEntityProcessingService, BulletSPI 
             bullet.setX(bullet.getX() + changeX * 3);
             bullet.setY(bullet.getY() + changeY * 3);
         }
-        System.out.println(world.getEntities().size());
     }
 
     @Override

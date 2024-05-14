@@ -28,7 +28,6 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 }
             }
         }
-
     }
 
     public Boolean collides(Entity entity1, Entity entity2) {
