@@ -1,7 +1,7 @@
 package dk.sdu.mmmi.cbse.common.services;
 
 import dk.sdu.mmmi.cbse.common.data.GameData;
-import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.EntityManager;
 
 /**
  * This interface defines the necessary contract for processing entities
@@ -29,7 +29,7 @@ public interface IEntityProcessingService {
      *
      *
      * @param gameData The current state of the game, providing context such as game window and key configurations.
-     * @param world The game world, containing all entities that may need updating or processing.
+     * @param entityManager The game world, containing all entities that may need updating or processing.
      */
-    void process(GameData gameData, World world);
+    void process(GameData gameData, EntityManager entityManager);
 }

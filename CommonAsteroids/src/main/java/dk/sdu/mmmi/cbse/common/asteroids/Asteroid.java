@@ -1,10 +1,7 @@
 package dk.sdu.mmmi.cbse.common.asteroids;
 
-import dk.sdu.mmmi.cbse.common.data.Entity;
+import dk.sdu.mmmi.cbse.common.data.CommonEntity;
 
-/**
- *
- * @author corfixen
- */
-public class Asteroid extends Entity {
+public class Asteroid extends CommonEntity {
+
 }

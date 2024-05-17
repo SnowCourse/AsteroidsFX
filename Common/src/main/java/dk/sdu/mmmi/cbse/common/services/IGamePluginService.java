@@ -1,7 +1,7 @@
 package dk.sdu.mmmi.cbse.common.services;
 
 import dk.sdu.mmmi.cbse.common.data.GameData;
-import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.EntityManager;
 
 /**
  * This interface defines the contract for lifecycle management of game plugins.
@@ -29,9 +29,9 @@ public interface IGamePluginService {
      * </ul>
      *
      * @param gameData The game data containing settings and state information needed to initialize the plugin.
-     * @param world The game world where the plugin will operate.
+     * @param entityManager The game world where the plugin will operate.
      */
-    void start(GameData gameData, World world);
+    void start(GameData gameData, EntityManager entityManager);
 
     /**
      * Cleans up the plugin by removing resources, entities, or other modifications made to the game world.
@@ -51,8 +51,8 @@ public interface IGamePluginService {
      * </ul>
      *
      * @param gameData The game data containing current settings and state information that may need modification.
-     * @param world The game world from which the plugin's effects will be removed.
+     * @param entityManager The game world from which the plugin's effects will be removed.
      * @throws IllegalArgumentException if either {@code gameData} or {@code world} is null.
      */
-    void stop(GameData gameData, World world);
+    void stop(GameData gameData, EntityManager entityManager);
 }

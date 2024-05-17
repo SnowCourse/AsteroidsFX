@@ -1,26 +1,23 @@
 package dk.sdu.mmmi.cbse.bulletsystem;
 
 import dk.sdu.mmmi.cbse.common.bullet.Bullet;
-import dk.sdu.mmmi.cbse.common.data.Entity;
+import dk.sdu.mmmi.cbse.common.data.CommonEntity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
-import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.EntityManager;
+import dk.sdu.mmmi.cbse.common.interfaces.Entity;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
 public class BulletPlugin implements IGamePluginService {
 
-    private Entity bullet;
-
     @Override
-    public void start(GameData gameData, World world) {
+    public void start(GameData gameData, EntityManager entityManager) {
 
     }
 
     @Override
-    public void stop(GameData gameData, World world) {
-        for (Entity e : world.getEntities()) {
-            if (e.getClass() == Bullet.class) {
-                world.removeEntity(e);
-            }
+    public void stop(GameData gameData, EntityManager entityManager) {
+        for (Entity bullet : entityManager.getAllEntitiesByClass(Bullet.class)) {
+            entityManager.removeEntity(bullet);
         }
     }
 

@@ -1,10 +1,10 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
 import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
-import dk.sdu.mmmi.cbse.common.data.Entity;
+import dk.sdu.mmmi.cbse.common.data.CommonEntity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
-import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.EntityManager;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 import java.util.Collection;
@@ -15,7 +15,7 @@ import static java.util.stream.Collectors.toList;
 
 public class PlayerControlSystem implements IEntityProcessingService {
     static long timeOfLastShot;
-    long shootingCooldown = 0;
+    long shootingCooldown = 300_000_000;
 
     private boolean canIShoot(){
         long currentTime = System.nanoTime();
@@ -23,9 +23,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
     }
 
     @Override
-    public void process(GameData gameData, World world) {
+    public void process(GameData gameData, EntityManager entityManager) {
             
-        for (Entity player : world.getEntities(Player.class)) {
+        for (CommonEntity player : entityManager.getAllEntitiesByClass(Player.class)) {
             if (gameData.getKeys().isDown(GameKeys.LEFT)) {
                 player.setRotation(player.getRotation() - 2);
             }
@@ -41,7 +41,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             if (gameData.getKeys().isDown(GameKeys.SPACE) && this.canIShoot()) {
                 getBulletSPIs().stream().findFirst().ifPresent(
                         bulletSPI -> {
-                            world.addEntity(bulletSPI.createBullet(player, gameData));
+                            entityManager.addEntity(bulletSPI.createBullet(player, gameData));
                             timeOfLastShot = System.nanoTime();
                         }
                 );

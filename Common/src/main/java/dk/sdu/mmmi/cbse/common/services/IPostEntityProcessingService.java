@@ -1,7 +1,7 @@
 package dk.sdu.mmmi.cbse.common.services;
 
 import dk.sdu.mmmi.cbse.common.data.GameData;
-import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.EntityManager;
 
 /**
  * This interface defines the contract for post-processing entities within a game world.
@@ -30,7 +30,7 @@ public interface IPostEntityProcessingService {
      * </ul>
      *
      * @param gameData The current state of the game, providing context such as game window and key configurations.
-     * @param world The game world, reflecting the state of all entities after the initial processing phase.
+     * @param entityManager The game world, reflecting the state of all entities after the initial processing phase.
      */
-    void process(GameData gameData, World world);
+    void process(GameData gameData, EntityManager entityManager);
 }
