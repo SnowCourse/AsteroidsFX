@@ -1,4 +1,4 @@
-import dk.sdu.mmmi.cbse.EnemyControlSystem;
+import dk.sdu.mmmi.cbse.enemy.EnemyControlSystem;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 module Enemy {
