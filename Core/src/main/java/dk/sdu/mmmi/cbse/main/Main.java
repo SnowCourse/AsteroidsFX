@@ -14,6 +14,8 @@ import java.util.ServiceLoader;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.stream.Collectors.toList;
+
+import dk.sdu.mmmi.cbse.common.services.IUIProcessingService;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -104,7 +106,10 @@ public class Main extends Application {
         }
         for (IPostEntityProcessingService postEntityProcessorService : getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, this.entityManager);
-        }       
+        }
+        for (IUIProcessingService uiProcessingService : getUIProcessingService()) {
+            uiProcessingService.processUI(gameWindow);
+        }
     }
 
     private void draw() {        
@@ -140,5 +145,9 @@ public class Main extends Application {
 
     private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
         return ServiceLoader.load(IPostEntityProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    private Collection<? extends IUIProcessingService> getUIProcessingService() {
+        return ServiceLoader.load(IUIProcessingService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
